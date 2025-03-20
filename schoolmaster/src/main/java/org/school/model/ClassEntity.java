@@ -13,17 +13,16 @@ import jakarta.persistence.OneToMany;
 
 @Entity
 public class ClassEntity {
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String className;
-    private String section;
-
-    @OneToMany(mappedBy = "assignedClass", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Student> students;
 
     @ManyToOne
     @JoinColumn(name = "teacher_id")
-    private Teacher teacher; // Changed from 'classTeacher' to 'teacher'
+    private Teacher teacher;
+
+    @OneToMany(mappedBy = "assignedClass", cascade = CascadeType.ALL)
+    private List<Student> students;
 }
