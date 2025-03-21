@@ -1,7 +1,6 @@
 package org.school.config;
 
-import java.net.http.HttpClient;
-
+import org.modelmapper.ModelMapper;
 import org.school.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +19,12 @@ public class SecurityConfig {
 	
 	@Autowired
 	private UserService userService;
+	
+	
+	 @Bean
+	    public ModelMapper modelMapper() {
+	        return new ModelMapper();
+	    }
 	
 	@Bean
 	public BCryptPasswordEncoder passwordcoder() {
@@ -68,6 +73,11 @@ public class SecurityConfig {
 		provider.setUserDetailsService(userService);
 		provider.setPasswordEncoder(passwordcoder());
 		return new ProviderManager(provider);
+	}
+	
+	@Bean
+	public ModelMapper getModelMapper() {
+		return new ModelMapper();
 	}
 
 }

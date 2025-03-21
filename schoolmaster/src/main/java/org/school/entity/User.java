@@ -1,10 +1,8 @@
-package org.school.model;
+package org.school.entity;
 
-import org.school.util.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,16 +17,18 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     private String firstName;
     private String lastName;
-    @Size(
-            min = 10, max = 100,
-            message= "Username should have a length between 10 and 100 characters.")
+    
+   
     @NotNull
+    @JsonIgnore
     private String username;
+    
+    @JsonIgnore
     private String password;
-    private String role; // ADMIN, TEACHER, STUDENT, PARENT
+    private String role; // ADMIN, TEACHER, STUDENT
 	public Long getId() {
 		return id;
 	}
@@ -80,9 +80,6 @@ public class User {
 		this.password = password;
 		this.role = role;
 	}
-
-	
-    
     
     
 }

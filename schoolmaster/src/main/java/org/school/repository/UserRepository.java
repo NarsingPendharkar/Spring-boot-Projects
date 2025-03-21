@@ -2,7 +2,7 @@ package org.school.repository;
 
 import java.util.Optional;
 
-import org.school.model.User;
+import org.school.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

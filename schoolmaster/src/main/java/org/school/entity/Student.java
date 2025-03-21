@@ -1,18 +1,30 @@
-package org.school.model;
+package org.school.entity;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.persistence.OneToOne;
 
 @Entity
-public class Student extends User {
-	
+@JsonIgnoreProperties({"usename", "password"})
+public class Student {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;  // Separate User entity
+
     private String admissionNumber;
     private Date admissionDate;
 
@@ -22,6 +34,22 @@ public class Student extends User {
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private List<Attendance> attendanceRecords;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	public String getAdmissionNumber() {
 		return admissionNumber;
@@ -55,9 +83,11 @@ public class Student extends User {
 		this.attendanceRecords = attendanceRecords;
 	}
 
-	public Student(String admissionNumber, Date admissionDate, ClassEntity assignedClass,
+	public Student(Long id, User user, String admissionNumber, Date admissionDate, ClassEntity assignedClass,
 			List<Attendance> attendanceRecords) {
 		super();
+		this.id = id;
+		this.user = user;
 		this.admissionNumber = admissionNumber;
 		this.admissionDate = admissionDate;
 		this.assignedClass = assignedClass;
@@ -69,16 +99,6 @@ public class Student extends User {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Student(Long id, String firstName, String lastName,
-			@Size(min = 10, max = 100, message = "Username should have a length between 10 and 100 characters.") @NotNull String username,
-			String password, String role) {
-		super(id, firstName, lastName, username, password, role);
-		// TODO Auto-generated constructor stub
-	}
     
-    
-    
-    
-    
-    
+
 }

@@ -2,7 +2,7 @@ package org.school.service;
 
 import java.util.Collections;
 
-import org.school.model.User;
+import org.school.entity.User;
 import org.school.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
