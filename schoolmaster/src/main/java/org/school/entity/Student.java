@@ -1,4 +1,5 @@
 package org.school.entity;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class Student {
     private User user;  // Separate User entity
 
     private String admissionNumber;
-    private Date admissionDate;
+    private LocalDate admissionDate;
 
     @ManyToOne
     @JoinColumn(name = "class_id")
