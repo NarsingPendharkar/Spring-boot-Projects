@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>JWT Token Response</title>
+	<script>
+	    function submitToken() {
+	        debugger;
+	        const token = document.getElementById("token").value;
+	        
+	        fetch('/admin/test', {
+	            method: 'post',  // ✅ Change to GET
+	            headers: { 
+	                'Authorization': 'Bearer ' + token,
+	                'Content-Type': 'application/json'  // ✅ Ensure JSON format
+	            }
+	        })
+	        .then(response => {
+	            if (!response.ok) {
+	                throw new Error('Access Denied: ' + response.status);
+	            }
+	            return response.text();
+	        })
+	        .then(data => alert(data))  // ✅ Show response from backend
+	        .catch(error => console.error('Error:', error));
+	    }
+	</script>
+
+</head>
+<body>
+    <h2>Authentication Successful</h2>
+    <p>Your JWT Token:</p>
+    <input type="text" id="token" th:value="${token}" readonly/>
+    <br><br>
+    <button onclick="submitToken()">Go to /admin/test</button>
+</body>
+</html>

@@ -1,4 +1,4 @@
-package org.jwtauth.entity;
+package demo.JsonWebToken.Entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,7 +8,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class Users {
+public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -42,17 +42,18 @@ public class Users {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	public Users(Long id, String username, String password, String role) {
+	public Person() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Person(Long id, String username, String password, String role) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.role = role;
 	}
-	public Users() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	
     
    
 }

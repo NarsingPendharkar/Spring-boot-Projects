@@ -1,10 +1,10 @@
-package org.jwtauth;
+package demo.JsonWebToken;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class JwtauthApplicationTests {
+class JsonWebTokenApplicationTests {
 
 	@Test
 	void contextLoads() {

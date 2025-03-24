@@ -1,13 +1,13 @@
-package org.jwtauth;
+package demo.JsonWebToken;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class JwtauthApplication {
+public class JsonWebTokenApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(JwtauthApplication.class, args);
+		SpringApplication.run(JsonWebTokenApplication.class, args);
 	}
 
 }
