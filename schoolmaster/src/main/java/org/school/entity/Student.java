@@ -60,11 +60,11 @@ public class Student {
 		this.admissionNumber = admissionNumber;
 	}
 
-	public Date getAdmissionDate() {
+	public LocalDate getAdmissionDate() {
 		return admissionDate;
 	}
 
-	public void setAdmissionDate(Date admissionDate) {
+	public void setAdmissionDate(LocalDate admissionDate) {
 		this.admissionDate = admissionDate;
 	}
 
@@ -84,7 +84,12 @@ public class Student {
 		this.attendanceRecords = attendanceRecords;
 	}
 
-	public Student(Long id, User user, String admissionNumber, Date admissionDate, ClassEntity assignedClass,
+	public Student() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Student(Long id, User user, String admissionNumber, LocalDate admissionDate, ClassEntity assignedClass,
 			List<Attendance> attendanceRecords) {
 		super();
 		this.id = id;
@@ -95,10 +100,6 @@ public class Student {
 		this.attendanceRecords = attendanceRecords;
 	}
 
-	public Student() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 
     
 
