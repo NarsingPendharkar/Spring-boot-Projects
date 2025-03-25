@@ -1,13 +1,7 @@
 package org.school.entity;
 
+import jakarta.persistence.*;
 import java.util.Date;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Exam {
@@ -18,9 +12,7 @@ public class Exam {
     private String examName;
     private Date examDate;
 
-    @ManyToOne
-    @JoinColumn(name = "class_id")
-    private ClassEntity classEntity;
+    private Long classId; // Stores Class ID instead of direct reference
 
 	public Long getId() {
 		return id;
@@ -46,27 +38,27 @@ public class Exam {
 		this.examDate = examDate;
 	}
 
-	public ClassEntity getClassEntity() {
-		return classEntity;
+	public Long getClassId() {
+		return classId;
 	}
 
-	public void setClassEntity(ClassEntity classEntity) {
-		this.classEntity = classEntity;
-	}
-
-	public Exam(Long id, String examName, Date examDate, ClassEntity classEntity) {
-		super();
-		this.id = id;
-		this.examName = examName;
-		this.examDate = examDate;
-		this.classEntity = classEntity;
+	public void setClassId(Long classId) {
+		this.classId = classId;
 	}
 
 	public Exam() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-    
+
+	public Exam(Long id, String examName, Date examDate, Long classId) {
+		super();
+		this.id = id;
+		this.examName = examName;
+		this.examDate = examDate;
+		this.classId = classId;
+	}
+
+    // Getters and Setters
     
 }
-

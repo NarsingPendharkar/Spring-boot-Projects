@@ -1,13 +1,6 @@
 package org.school.entity;
 
-import java.util.Date;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 @Entity
 public class Fee {
@@ -15,24 +8,21 @@ public class Fee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "student_id")
-    private Student student;
+    private Long studentId; // Stores Student ID instead of direct reference
 
     private Double amount;
-    private Date dueDate;
-    private Boolean isPaid;
+    private String status; // Paid or Pending
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Student getStudent() {
-		return student;
+	public Long getStudentId() {
+		return studentId;
 	}
-	public void setStudent(Student student) {
-		this.student = student;
+	public void setStudentId(Long studentId) {
+		this.studentId = studentId;
 	}
 	public Double getAmount() {
 		return amount;
@@ -40,31 +30,25 @@ public class Fee {
 	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
-	public Date getDueDate() {
-		return dueDate;
+	public String getStatus() {
+		return status;
 	}
-	public void setDueDate(Date dueDate) {
-		this.dueDate = dueDate;
-	}
-	public Boolean getIsPaid() {
-		return isPaid;
-	}
-	public void setIsPaid(Boolean isPaid) {
-		this.isPaid = isPaid;
-	}
-	public Fee(Long id, Student student, Double amount, Date dueDate, Boolean isPaid) {
-		super();
-		this.id = id;
-		this.student = student;
-		this.amount = amount;
-		this.dueDate = dueDate;
-		this.isPaid = isPaid;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	public Fee() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-    
-    
-}
+	public Fee(Long id, Long studentId, Double amount, String status) {
+		super();
+		this.id = id;
+		this.studentId = studentId;
+		this.amount = amount;
+		this.status = status;
+	}
 
+    // Getters and Setters
+    
+	
+}

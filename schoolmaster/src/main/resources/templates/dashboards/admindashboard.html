@@ -159,7 +159,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each=" stds: ${allStudents}">
+						<tr th:each=" stds: ${studentlist}">
 							<td th:text="${stds.id}"></td>
 							<td th:text="${stds.firstName}"></td>
 							<td th:text="${stds.lastName}"></td>
@@ -231,22 +231,16 @@
 					<thead class="table-dark">
 						<tr>
 							<th>ID</th>
-							<th>First Name</th>
-							<th>Last Name</th>
-							<th>Email</th>
 							<th>Employee ID</th>
 							<th>Subject Specialization</th>
 							<th>Actions</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>1</td>
-							<td>Jane</td>
-							<td>Smith</td>
-							<td>jane.smith@example.com</td>
-							<td>EMP56789</td>
-							<td>Mathematics</td>
+						<tr th:each=" stds: ${teacherlist}">
+							<td th:text="${stds.userId}"></td>
+							<td th:text="${stds.employeeId}"></td>
+							<td th:text="${stds.subjectSpecialization}"></td>
 							<td>
 								<button class="btn btn-warning btn-sm"><i class="fa-solid fa-pen"></i> Edit</button>
 								<button class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i> Delete</button>
@@ -260,25 +254,24 @@
 			<div id="addTeacherForm" class="hidden-section form-container">
 				<h3>Add New Teacher</h3>
 				<form action="/admin/saveteacher" method="post">
+					
+				<!--	<div class="mb-3" th:if="${message}">
+					    <p th:text="${message}"></p>
+					</div>-->
+
 					<div class="mb-3">
-						<label for="teacherFirstName" class="form-label">First Name</label>
-						<input type="text" class="form-control" id="teacherFirstName" placeholder="Enter First Name">
-					</div>
-					<div class="mb-3">
-						<label for="teacherLastName" class="form-label">Last Name</label>
-						<input type="text" class="form-control" id="teacherLastName" placeholder="Enter Last Name">
-					</div>
-					<div class="mb-3">
-						<label for="teacherEmail" class="form-label">Email</label>
-						<input type="email" class="form-control" id="teacherEmail" placeholder="Enter Email">
+					<select class="form-select" id="userId" name="userId" required>
+					    <option value="" disabled selected>Select Teacher to Add</option>
+					    <option th:each="teacher : ${teacherUser}" th:value="${teacher.userId}" th:text="${teacher.firstName + ' ' + teacher.lastName}"></option>
+					</select>
 					</div>
 					<div class="mb-3">
 						<label for="employeeId" class="form-label">Employee ID</label>
-						<input type="text" class="form-control" id="employeeId" placeholder="Enter Employee ID">
+						<input type="text" class="form-control" id="employeeId" name="employeeId" placeholder="Enter Employee ID">
 					</div>
 					<div class="mb-3">
 						<label for="subjectSpecialization" class="form-label">Subject Specialization</label>
-						<input type="text" class="form-control" id="subjectSpecialization"
+						<input type="text" class="form-control" id="subjectSpecialization" name="subjectSpecialization"
 							placeholder="Enter Subject Specialization">
 					</div>
 					<button type="submit" class="btn btn-primary">Submit</button>

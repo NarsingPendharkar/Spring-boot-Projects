@@ -41,7 +41,7 @@ public class SecurityConfig {
 			.requestMatchers("/student/**").hasAuthority("STUDENT")
 			.requestMatchers("/teacher/**").hasAuthority("TEACHER")
 			.requestMatchers("/parent/**").hasAuthority("PARENT")
-			.requestMatchers("/login","/logout","/register","/saveuser").permitAll()
+			.requestMatchers("/login","/logout","/register","/saveuser","/create").permitAll()
 			.anyRequest().authenticated();
 		}).formLogin(login -> login
         	    .loginPage("/login") 

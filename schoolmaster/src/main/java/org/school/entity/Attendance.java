@@ -1,15 +1,7 @@
 package org.school.entity;
 
+import jakarta.persistence.*;
 import java.util.Date;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 
 @Entity
 public class Attendance {
@@ -20,9 +12,7 @@ public class Attendance {
     @Temporal(TemporalType.DATE)
     private Date date;
 
-    @ManyToOne
-    @JoinColumn(name = "student_id")
-    private Student student;
+    private Long studentId; // Stores Student ID instead of direct reference
 
     private boolean present;
 
@@ -42,12 +32,12 @@ public class Attendance {
 		this.date = date;
 	}
 
-	public Student getStudent() {
-		return student;
+	public Long getStudentId() {
+		return studentId;
 	}
 
-	public void setStudent(Student student) {
-		this.student = student;
+	public void setStudentId(Long studentId) {
+		this.studentId = studentId;
 	}
 
 	public boolean isPresent() {
@@ -58,19 +48,19 @@ public class Attendance {
 		this.present = present;
 	}
 
-	public Attendance(Long id, Date date, Student student, boolean present) {
-		super();
-		this.id = id;
-		this.date = date;
-		this.student = student;
-		this.present = present;
-	}
-
 	public Attendance() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
+
+	public Attendance(Long id, Date date, Long studentId, boolean present) {
+		super();
+		this.id = id;
+		this.date = date;
+		this.studentId = studentId;
+		this.present = present;
+	}
+
+    // Getters and Setters
     
 }
-

@@ -59,7 +59,7 @@
         <div class="header">
             <h2><i class="fa-solid fa-user-plus me-2"></i>Register</h2>
         </div>
-        <form action="saveuser" method="post">
+        <form action="/saveuser" method="post">
             <div class="mb-3">
                 <label for="firstName" class="form-label">First Name</label>
                 <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter First Name">
@@ -77,31 +77,6 @@
                 <input type="password" class="form-control" name="password" placeholder="Enter Password">
             </div>
 
-            <!-- Student Fields -->
-            <div id="studentFields">
-                <div class="mb-3">
-                    <label for="admissionDate" class="form-label">Student Admission Date</label>
-                    <input type="date" class="form-control" name="admissionDate" placeholder="Enter admission date">
-                </div>
-                <div class="mb-3">
-                    <label for="admissionNumber" class="form-label">Admission Number</label>
-                    <input type="text" class="form-control" name="admissionNumber" placeholder="Enter admission number">
-                </div>
-            </div>
-
-            <!-- Teacher Fields -->
-            <div id="teacherFields">
-                <div class="mb-3">
-                    <label for="employeeId" class="form-label">Teacher Employee ID</label>
-                    <input type="text" class="form-control" id="employeeId" name="employeeId"
-                        placeholder="Teacher Employee ID">
-                </div>
-                <div class="mb-3">
-                    <label for="subjectSpecialization" class="form-label">Subject Specialization</label>
-                    <input type="text" class="form-control" id="subjectSpecialization" name="subjectSpecialization"
-                        placeholder="Enter Subject Specialization">
-                </div>
-            </div>
 
             <!-- Role Selection -->
             <div class="mb-3">
@@ -124,26 +99,7 @@
 
 <script>
     $(document).ready(function () {
-        $("#role").change(function () {
-            var selectedRole = $(this).val();
-
-            if (selectedRole === 'TEACHER') {
-                $("#teacherFields").show();
-                $("#employeeId, #subjectSpecialization").prop("disabled", false);
-            } else {
-                $("#teacherFields").hide();
-                $("#employeeId, #subjectSpecialization").prop("disabled", true);
-            }
-
-            if (selectedRole === 'STUDENT') {
-                $("#studentFields").show();
-            } else {
-                $("#studentFields").hide();
-            }
-        });
-
-        // Trigger change event on page load
-        $("#role").trigger("change");
+      
     });
 </script>
 

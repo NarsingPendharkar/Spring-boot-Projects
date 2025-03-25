@@ -1,11 +1,6 @@
 package org.school.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 @Entity
 public class Marks {
@@ -13,66 +8,55 @@ public class Marks {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "student_id")
-    private Student student;
+    private Long studentId; // Stores Student ID instead of direct reference
+    private Long examId;    // Stores Exam ID instead of direct reference
 
-    @ManyToOne
-    @JoinColumn(name = "exam_id")
-    private Exam exam;
+    private int score;
 
-    private String subject;
-    private Integer marksObtained;
-    private Integer totalMarks;
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Student getStudent() {
-		return student;
+
+	public Long getStudentId() {
+		return studentId;
 	}
-	public void setStudent(Student student) {
-		this.student = student;
+
+	public void setStudentId(Long studentId) {
+		this.studentId = studentId;
 	}
-	public Exam getExam() {
-		return exam;
+
+	public Long getExamId() {
+		return examId;
 	}
-	public void setExam(Exam exam) {
-		this.exam = exam;
+
+	public void setExamId(Long examId) {
+		this.examId = examId;
 	}
-	public String getSubject() {
-		return subject;
+
+	public int getScore() {
+		return score;
 	}
-	public void setSubject(String subject) {
-		this.subject = subject;
+
+	public void setScore(int score) {
+		this.score = score;
 	}
-	public Integer getMarksObtained() {
-		return marksObtained;
-	}
-	public void setMarksObtained(Integer marksObtained) {
-		this.marksObtained = marksObtained;
-	}
-	public Integer getTotalMarks() {
-		return totalMarks;
-	}
-	public void setTotalMarks(Integer totalMarks) {
-		this.totalMarks = totalMarks;
-	}
-	public Marks(Long id, Student student, Exam exam, String subject, Integer marksObtained, Integer totalMarks) {
-		super();
-		this.id = id;
-		this.student = student;
-		this.exam = exam;
-		this.subject = subject;
-		this.marksObtained = marksObtained;
-		this.totalMarks = totalMarks;
-	}
+
 	public Marks() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-    
-    
+
+	public Marks(Long id, Long studentId, Long examId, int score) {
+		super();
+		this.id = id;
+		this.studentId = studentId;
+		this.examId = examId;
+		this.score = score;
+	}
+
+   
 }
