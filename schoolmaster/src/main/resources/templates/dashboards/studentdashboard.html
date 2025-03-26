@@ -78,12 +78,12 @@
             <hr>
             <ul class="nav flex-column">
                 <li class="nav-item"><a href="#dashboard" class="nav-link text-white section-link"><i class="fa-solid fa-home"></i> Dashboard</a></li>
-                <li class="nav-item"><a href="#manageCourses" class="nav-link text-white section-link"><i class="fa-solid fa-book"></i> My Courses</a></li>
-                <li class="nav-item"><a href="#manageAssignments" class="nav-link text-white section-link"><i class="fa-solid fa-tasks"></i> Assignments</a></li>
-                <li class="nav-item"><a href="#grades" class="nav-link text-white section-link"><i class="fa-solid fa-chart-bar"></i> Grades</a></li>
+                <li class="nav-item"><a href="#myCourses" class="nav-link text-white section-link"><i class="fa-solid fa-book"></i> My Courses</a></li>
+                <li class="nav-item"><a href="#myGrades" class="nav-link text-white section-link"><i class="fa-solid fa-graduation-cap"></i> My Grades</a></li>
+                <li class="nav-item"><a href="#fees" class="nav-link text-white section-link"><i class="fa-solid fa-wallet"></i> Fees</a></li>
             </ul>
             <hr>
-            <a href="/logout" class="btn btn-light w-100">Logout</a>
+            <a href="/logout" class="btn btn-light w-100"><i class="fa-solid fa-sign-out-alt me-2"></i> Logout</a>
         </div>
 
         <!-- Main Content -->
@@ -95,123 +95,65 @@
                     <div class="col-md-4">
                         <div class="card text-white bg-primary mb-3">
                             <div class="card-body">
-                                <h5 class="card-title">Enrolled Courses</h5>
-                                <p class="card-text display-6">8</p>
+                                <div>
+                                    <h5 class="card-title">Enrolled Courses</h5>
+                                    <p class="card-text display-6">5</p>
+                                </div>
+                                <i class="fa-solid fa-book"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-white bg-secondary mb-3">
+                            <div class="card-body">
+                                <div>
+                                    <h5 class="card-title">Pending Assignments</h5>
+                                    <p class="card-text display-6">3</p>
+                                </div>
+                                <i class="fa-solid fa-tasks"></i>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="card text-white bg-danger mb-3">
                             <div class="card-body">
-                                <h5 class="card-title">Pending Assignments</h5>
-                                <p class="card-text display-6">3</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card text-white bg-success mb-3">
-                            <div class="card-body">
-                                <h5 class="card-title">Completed Courses</h5>
-                                <p class="card-text display-6">5</p>
+                                <div>
+                                    <h5 class="card-title">Fees Due</h5>
+                                    <p class="card-text display-6">₹10,000</p>
+                                </div>
+                                <i class="fa-solid fa-money-bill-wave"></i>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Manage Courses Section -->
-            <div id="manageCourses" class="hidden-section table-container">
+            <!-- My Courses Section -->
+            <div id="myCourses" class="hidden-section table-container">
                 <h3>My Courses</h3>
-                <button class="btn btn-primary mb-3" id="addCourseBtn"><i class="fa-solid fa-plus me-2"></i>Add New Course</button>
                 <table class="table table-bordered">
                     <thead class="table-dark">
                         <tr>
                             <th>Course ID</th>
                             <th>Course Name</th>
                             <th>Instructor</th>
-                            <th>Actions</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>101</td>
                             <td>Mathematics</td>
-                            <td>Jane Smith</td>
-                            <td>
-                                <button class="btn btn-warning btn-sm"><i class="fa-solid fa-pen"></i> Edit</button>
-                                <button class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i> Delete</button>
-                            </td>
+                            <td>Mr. John Doe</td>
+                            <td>Ongoing</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            <!-- Add Course Form -->
-            <div id="addCourseForm" class="hidden-section form-container">
-                <h3>Add New Course</h3>
-                <form>
-                    <div class="mb-3">
-                        <label for="courseName" class="form-label">Course Name</label>
-                        <input type="text" class="form-control" id="courseName" placeholder="Enter Course Name">
-                    </div>
-                    <div class="mb-3">
-                        <label for="instructorName" class="form-label">Instructor Name</label>
-                        <input type="text" class="form-control" id="instructorName" placeholder="Enter Instructor Name">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <button type="button" class="btn btn-secondary" id="cancelAddCourse">Cancel</button>
-                </form>
-            </div>
-
-            <!-- Manage Assignments Section -->
-            <div id="manageAssignments" class="hidden-section table-container">
-                <h3>Assignments</h3>
-                <button class="btn btn-primary mb-3" id="addAssignmentBtn"><i class="fa-solid fa-plus me-2"></i>Add New Assignment</button>
-                <table class="table table-bordered">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>Assignment ID</th>
-                            <th>Title</th>
-                            <th>Due Date</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>201</td>
-                            <td>Algebra Homework</td>
-                            <td>2025-03-25</td>
-                            <td>Pending</td>
-                            <td>
-                                <button class="btn btn-warning btn-sm"><i class="fa-solid fa-pen"></i> Edit</button>
-                                <button class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i> Delete</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Add Assignment Form -->
-            <div id="addAssignmentForm" class="hidden-section form-container">
-                <h3>Add New Assignment</h3>
-                <form>
-                    <div class="mb-3">
-                        <label for="assignmentTitle" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="assignmentTitle" placeholder="Enter Assignment Title">
-                    </div>
-                    <div class="mb-3">
-                        <label for="dueDate" class="form-label">Due Date</label>
-                        <input type="date" class="form-control" id="dueDate">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <button type="button" class="btn btn-secondary" id="cancelAddAssignment">Cancel</button>
-                </form>
-            </div>
-
-            <!-- Grades Section -->
-            <div id="grades" class="hidden-section table-container">
-                <h3>Grades</h3>
+            <!-- My Grades Section -->
+            <div id="myGrades" class="hidden-section table-container">
+                <h3>My Grades</h3>
                 <table class="table table-bordered">
                     <thead class="table-dark">
                         <tr>
@@ -230,6 +172,12 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+
+            <!-- Fees Section -->
+            <div id="fees" class="hidden-section table-container">
+                <h3>Fees</h3>
+                <p>Details about fees will be displayed here.</p>
             </div>
         </div>
     </div>

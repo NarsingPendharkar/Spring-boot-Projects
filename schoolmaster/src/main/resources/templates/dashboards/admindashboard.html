@@ -11,78 +11,140 @@
 	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<style>
 		body {
-			font-family: 'Arial', sans-serif;
-			background-color: #f8f9fa;
+			font-family: 'Poppins', sans-serif;
+			background: linear-gradient(135deg, #f3f4f6, #e9ecef);
+			color: #333;
 		}
 
 		.sidebar {
-			height: 100vh;
-			position: fixed;
-			background-color: #343a40;
-			color: #fff;
+			background: linear-gradient(135deg, #6a11cb, #2575fc);
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 		}
 
 		.sidebar h4 {
-			font-size: 1.5rem;
+			font-size: 1.8rem;
 			font-weight: bold;
+			text-align: center;
+			margin-bottom: 20px;
 		}
 
 		.sidebar .nav-link {
-			font-size: 1rem;
-			padding: 10px 15px;
-			border-radius: 5px;
-			transition: background-color 0.3s ease;
+			font-size: 1.1rem;
+			padding: 12px 20px;
+			color: #fff;
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+
+		.sidebar .nav-link i {
+			font-size: 1.2rem;
 		}
 
 		.sidebar .nav-link:hover {
-			background-color: #495057;
+			background: rgba(255, 255, 255, 0.2);
 		}
 
 		.main-content {
-			margin-left: 280px;
-			padding: 20px;
+			margin-left: 300px;
+			padding: 30px;
 		}
 
 		.main-content h2 {
-			font-size: 2rem;
-			margin-bottom: 20px;
+			font-size: 2.5rem;
+			color: #6a11cb;
+			font-weight: bold;
 		}
 
 		.card {
 			border: none;
-			border-radius: 10px;
-			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			border-radius: 15px;
+			box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+			overflow: hidden;
 		}
 
-		.btn-primary {
-			background-color: #6a11cb;
-			border: none;
+		.card .card-body {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
 		}
 
-		.btn-primary:hover {
-			background-color: #2575fc;
+		.card .card-body i {
+			font-size: 3rem;
+			opacity: 0.8;
+		}
+
+		.card.bg-primary {
+			background: linear-gradient(135deg, #6a11cb, #2575fc);
+		}
+
+		.card.bg-secondary {
+			background: linear-gradient(135deg, #ff7e5f, #feb47b);
+		}
+
+		.card.bg-danger {
+			background: linear-gradient(135deg, #ff6a6a, #ee0979);
+		}
+
+		.card .card-title {
+			font-size: 1.2rem;
+			font-weight: bold;
+		}
+
+		.card .card-text {
+			font-size: 2rem;
+			font-weight: bold;
 		}
 
 		.table-container,
 		.form-container {
-			margin-top: 20px;
-			background-color: #fff;
-			border-radius: 10px;
-			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-			padding: 20px;
+			background: #fff;
+			border-radius: 15px;
+			box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+			padding: 25px;
 		}
 
 		.table th,
 		.table td {
 			vertical-align: middle;
-		}
-
-		.row {
-			gap: 20px;
+			font-size: 1rem;
 		}
 
 		.hidden-section {
 			display: none;
+		}
+
+		.btn-primary {
+			background: linear-gradient(135deg, #6a11cb, #2575fc);
+			border: none;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		}
+
+		.btn-primary:hover {
+			background: linear-gradient(135deg, #2575fc, #6a11cb);
+		}
+
+		.btn-secondary {
+			background: #6c757d;
+			border: none;
+		}
+
+		.btn-secondary:hover {
+			background: #5a6268;
+		}
+
+		.container-fluid {
+			display: flex;
+			flex-wrap: nowrap;
+		}
+
+		.sidebar {
+			height: 100vh; /* Ensure the sidebar spans the full height */
+		}
+
+		.main-content {
+			flex-grow: 1; /* Ensure the main content fills the remaining space */
+			margin-left: 0; /* Remove any unintended margin */
 		}
 	</style>
 </head>
@@ -90,8 +152,8 @@
 <body>
 	<div class="container-fluid d-flex p-0">
 		<!-- Sidebar -->
-		<div class="sidebar bg-dark text-white p-3" style="width: 280px;">
-			<h4><i class="fa-solid fa-user-shield me-2"></i> Admin Panel</h4>
+		<div class="sidebar bg-dark text-white p-3" style="width: 300px;">
+			<h4><i class="fa-solid fa-school me-2"></i> Admin Panel</h4>
 			<hr>
 			<ul class="nav flex-column">
 				<li class="nav-item"><a href="#dashboard" class="nav-link text-white section-link"><i
@@ -106,7 +168,7 @@
 							class="fa-solid fa-chart-bar"></i> Reports</a></li>
 			</ul>
 			<hr>
-			<a href="/logout" class="btn btn-light w-100">Logout</a>
+			<a href="/logout" class="btn btn-light w-100"><i class="fa-solid fa-sign-out-alt me-2"></i> Logout</a>
 		</div>
 
 		<!-- Main Content -->
@@ -118,24 +180,33 @@
 					<div class="col-md-4">
 						<div class="card text-white bg-primary mb-3">
 							<div class="card-body">
-								<h5 class="card-title">Total Students</h5>
-								<p class="card-text display-6">1200</p>
+								<div>
+									<h5 class="card-title">Total Students</h5>
+									<p class="card-text display-6">1200</p>
+								</div>
+								<i class="fa-solid fa-user-graduate"></i>
 							</div>
 						</div>
 					</div>
 					<div class="col-md-4">
 						<div class="card text-white bg-secondary mb-3">
 							<div class="card-body">
-								<h5 class="card-title">Total Teachers</h5>
-								<p class="card-text display-6">75</p>
+								<div>
+									<h5 class="card-title">Total Teachers</h5>
+									<p class="card-text display-6">75</p>
+								</div>
+								<i class="fa-solid fa-chalkboard-teacher"></i>
 							</div>
 						</div>
 					</div>
 					<div class="col-md-4">
 						<div class="card text-white bg-danger mb-3">
 							<div class="card-body">
-								<h5 class="card-title">Pending Fees</h5>
-								<p class="card-text display-6">₹50,000</p>
+								<div>
+									<h5 class="card-title">Pending Fees</h5>
+									<p class="card-text display-6">₹50,000</p>
+								</div>
+								<i class="fa-solid fa-money-bill-wave"></i>
 							</div>
 						</div>
 					</div>

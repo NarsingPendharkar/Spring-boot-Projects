@@ -7,6 +7,7 @@ import org.modelmapper.TypeToken;
 import org.school.DTO.StudentDTO;
 import org.school.DTO.StudentResponseDTO;
 import org.school.DTO.UserDTO;
+import org.school.DTO.UserdataDTO;
 import org.school.entity.ClassEntity;
 import org.school.entity.Student;
 import org.school.entity.Teacher;
@@ -31,6 +32,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -42,6 +44,8 @@ public class Admincontroller {
 	private UserService userService;
 	@Autowired
 	private TeacherService teacherService;
+	@Autowired
+	private RestTemplate restTemplate;
 	@Autowired
 	private StudentService studentService;
 	@Autowired
@@ -173,4 +177,13 @@ public class Admincontroller {
 			  return "redirect:/dashboards";
 		}
 }
+    
+    @GetMapping("/userdata")
+    @ResponseBody
+    public UserdataDTO getMethodName(Model model) {
+    	String url = "https://dummyjson.com/users/1";
+    UserdataDTO res =	restTemplate.getForObject(url, UserdataDTO.class);
+        return res;
+    }
+    
 }

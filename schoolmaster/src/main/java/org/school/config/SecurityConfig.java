@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @EnableWebSecurity
@@ -29,6 +30,10 @@ public class SecurityConfig {
 	@Bean
 	public BCryptPasswordEncoder passwordcoder() {
 		return new BCryptPasswordEncoder();
+	}
+	@Bean
+	public RestTemplate getRestTemplate() {
+		return new RestTemplate();
 	}
 	
 	
