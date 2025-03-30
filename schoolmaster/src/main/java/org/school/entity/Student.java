@@ -14,6 +14,7 @@ public class Student {
     private String admissionNumber;
     private LocalDate admissionDate;
     private Long classId; // Stores Class ID instead of direct reference
+    
 	public Long getId() {
 		return id;
 	}

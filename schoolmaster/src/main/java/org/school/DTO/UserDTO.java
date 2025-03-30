@@ -1,9 +1,7 @@
 package org.school.DTO;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class UserDTO {
-	@JsonProperty("id") 
+
 	private Long userId;
     private String firstName;
     private String lastName;

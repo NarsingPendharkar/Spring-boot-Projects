@@ -48,6 +48,11 @@ public class Teacher {
 		this.employeeId = employeeId;
 		this.subjectSpecialization = subjectSpecialization;
 	}
+	@Override
+	public String toString() {
+		return String.format("Teacher [id=%s, userId=%s, employeeId=%s, subjectSpecialization=%s]", id, userId,
+				employeeId, subjectSpecialization);
+	}
 
     // Getters and Setters
 }

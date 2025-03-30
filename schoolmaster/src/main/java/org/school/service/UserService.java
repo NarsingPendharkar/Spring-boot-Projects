@@ -43,6 +43,15 @@ public class UserService implements UserDetailsService {
 	public List<User> findUserByRole(String role) {
         return userRepositor.findByRole(role).orElse(null);
     }
+
+	public User findUserByid(Long userId) {
+		return userRepositor.findById(userId).orElseThrow(()-> new RuntimeException("User not found"));
+	}
+
+	public void deleteUserbyId(long id) {
+		userRepositor.deleteById(id).orElseThrow(()-> new RuntimeException("User not found"));
+	}
+	
 	
 
 	

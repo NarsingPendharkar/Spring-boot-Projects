@@ -149,14 +149,14 @@
             <!-- Add Class Form -->
             <div id="addClassForm" class="hidden-section form-container">
                 <h3>Add New Class</h3>
-                <form>
+                <form action="addClass" method="post">
                     <div class="mb-3">
                         <label for="className" class="form-label">Class Name</label>
                         <input type="text" class="form-control" id="className" placeholder="Enter Class Name">
                     </div>
                     <div class="mb-3">
-                        <label for="studentCount" class="form-label">Number of Students</label>
-                        <input type="number" class="form-control" id="studentCount" placeholder="Enter Number of Students">
+                        <label for="studentCount" class="form-label">Teacher Name</label>
+                        <input type="number" class="form-control" id="teacherId" name="teacherId" readonly>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                     <button type="button" class="btn btn-secondary" id="cancelAddClass">Cancel</button>

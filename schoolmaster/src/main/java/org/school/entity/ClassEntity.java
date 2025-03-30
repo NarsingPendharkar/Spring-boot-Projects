@@ -10,6 +10,8 @@ public class ClassEntity {
 
     private String className;
     private Long teacherId; // Stores Teacher ID instead of direct reference
+    
+    
 	public Long getId() {
 		return id;
 	}
