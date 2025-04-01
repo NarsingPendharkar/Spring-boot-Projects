@@ -1,14 +1,22 @@
 package org.school.controller;
 
+import java.util.Date;
+
 import org.modelmapper.ModelMapper;
 import org.school.entity.Course;
+import org.school.entity.Fee;
+import org.school.entity.Grade;
 import org.school.entity.User;
 import org.school.service.CourseService;
+import org.school.service.FeeService;
+import org.school.service.GradeService;
+import org.school.service.PreloadDataService;
 import org.school.service.StudentService;
 import org.school.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,6 +28,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 @Controller
@@ -29,7 +38,14 @@ public class Admincontroller {
 	private final Logger logger = LoggerFactory.getLogger(Admincontroller.class);
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private GradeService gradeService;
+	@Autowired
+	private FeeService feeService;
+	
 
+	@Autowired
+	private PreloadDataService dataService;
 	@Autowired
 	private RestTemplate restTemplate;
 	@Autowired
@@ -82,6 +98,12 @@ public class Admincontroller {
 		Authentication authuser = SecurityContextHolder.getContext().getAuthentication();
 		// String role = authuser.getAuthorities().toArray()[0].toString();
 		String role = authuser.getAuthorities().iterator().next().getAuthority();
+		model.addAttribute("users", dataService.findAllUsers());
+		model.addAttribute("studentlist", dataService.fetchStudents());
+		model.addAttribute("teacherList", dataService.fetchTeachers());
+		model.addAttribute("courseList", dataService.getCourseList());
+		model.addAttribute("gradeList", dataService.getGradeList());
+		model.addAttribute("feeList", dataService.getFeeList());
 		model.addAttribute("role", role);
 		if (role.equalsIgnoreCase("ADMIN")) {
 
@@ -136,21 +158,64 @@ public class Admincontroller {
 				+ "        window.location.href=\"/dashboards\";\r\n" + "    }, 2000);\r\n" + "</script>\r\n"
 				+ "</html>");
 	}
-	
+
 	// save course
 	@PostMapping("/addcourse")
-    public ResponseEntity<String> addCoursePage(Model model, @ModelAttribute Course course,BindingResult result) {
-		System.out.println(course.toString());
-		if(result.hasErrors()) {
+	public ResponseEntity<String> addCoursePage(Model model, @ModelAttribute Course course, BindingResult result) {
+
+		if (result.hasErrors()) {
 			logger.error("Invalid course description");
-            return ResponseEntity.badRequest().body("Invalid course description");
+			return ResponseEntity.badRequest().body("Invalid course description");
 		}
-       courseService.saveCourse(course);
-   	return ResponseEntity.ok("<html>\r\n" + "<body>\r\n" + "    <h3>Course added successfully !</h3>\r\n"
-			+ "</body> \r\n" + "<script>\r\n" + "    setTimeout(() => {\r\n"
-			+ "        window.location.href=\"/dashboards\";\r\n" + "    }, 2000);\r\n" + "</script>\r\n"
-			+ "</html>");
-    }
+		courseService.saveCourse(course);
+		return ResponseEntity.ok("<html>\r\n" + "<body>\r\n" + "    <h3>Course added successfully !</h3>\r\n"
+				+ "</body> \r\n" + "<script>\r\n" + "    setTimeout(() => {\r\n"
+				+ "        window.location.href=\"/dashboards\";\r\n" + "    }, 2000);\r\n" + "</script>\r\n"
+				+ "</html>");
+	}
+
+	// delete course
+	@GetMapping("deletecourse/{id}")
+	public ResponseEntity<String> deleteCourse(@PathVariable Long id) {
+		try {
+			courseService.deleteById(id);
+			return ResponseEntity.ok("course successfully deleted");
+		} catch (Exception e) {
+			return ResponseEntity.ok("Please try again later");
+		}
+	}
+
+	// add new grade
+	@PostMapping("/addgrade")
+	public ResponseEntity<String> addGrade(@RequestParam("studentId") Long studentId,
+			@RequestParam("courseId") Long courseId, @RequestParam("grade") String grade,
+			@RequestParam("dateAwarded") @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateAwarded, Model model) {
+		Grade gradedata = new Grade();
+		gradedata.setStudentId(studentId);
+		gradedata.setCourseId(courseId);
+		gradedata.setGrade(grade);
+		gradedata.setDateAwarded(dateAwarded);
+		System.out.println(gradedata.toString());
+		gradeService.saveGrade(gradedata);
+		return ResponseEntity.ok("<html>\r\n" + "<body>\r\n" + "    <h3>Greade added successfully !</h3>\r\n"
+				+ "</body> \r\n" + "<script>\r\n" + "    setTimeout(() => {\r\n"
+				+ "        window.location.href=\"/dashboards\";\r\n" + "    }, 2000);\r\n" + "</script>\r\n"
+				+ "</html>");
+	}
+	
+	
+	// add new fee
+	
+	@PostMapping("/addFee")
+	public ResponseEntity<String> addFee(Model model, @ModelAttribute Fee fee) {
+		
+		System.out.println(fee.toString());
+		feeService.saveFee(fee);
+		return ResponseEntity.ok("<html>\r\n" + "<body>\r\n" + "    <h3>Fee added successfully !</h3>\r\n"
+				+ "</body> \r\n" + "<script>\r\n" + "    setTimeout(() => {\r\n"
+				+ "        window.location.href=\"/dashboards\";\r\n" + "    }, 2000);\r\n" + "</script>\r\n"
+				+ "</html>");
+	}
 	
 	
 
