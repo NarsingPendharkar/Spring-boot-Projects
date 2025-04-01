@@ -1,0 +1,139 @@
+body {
+			font-family: 'Poppins', sans-serif;
+			background: linear-gradient(135deg, #f3f4f6, #e9ecef);
+			color: #333;
+		}
+
+		.sidebar {
+			background: linear-gradient(135deg, #6a11cb, #2575fc);
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		}
+
+		.sidebar h4 {
+			font-size: 1.8rem;
+			font-weight: bold;
+			text-align: center;
+			margin-bottom: 20px;
+		}
+
+		.sidebar .nav-link {
+			font-size: 1.1rem;
+			padding: 12px 20px;
+			color: #fff;
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+
+		.sidebar .nav-link i {
+			font-size: 1.2rem;
+		}
+
+		.sidebar .nav-link:hover {
+			background: rgba(255, 255, 255, 0.2);
+		}
+
+		.main-content {
+			margin-left: 300px;
+			padding: 30px;
+		}
+
+		.main-content h2 {
+			font-size: 2.5rem;
+			color: #6a11cb;
+			font-weight: bold;
+		}
+
+		.card {
+			border: none;
+			border-radius: 15px;
+			box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+			overflow: hidden;
+		}
+
+		.card .card-body {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+
+		.card .card-body i {
+			font-size: 3rem;
+			opacity: 0.8;
+		}
+
+		.card.bg-primary {
+			background: linear-gradient(135deg, #6a11cb, #2575fc);
+		}
+
+		.card.bg-secondary {
+			background: linear-gradient(135deg, #ff7e5f, #feb47b);
+		}
+
+		.card.bg-danger {
+			background: linear-gradient(135deg, #ff6a6a, #ee0979);
+		}
+
+		.card .card-title {
+			font-size: 1.2rem;
+			font-weight: bold;
+		}
+
+		.card .card-text {
+			font-size: 2rem;
+			font-weight: bold;
+		}
+
+		.table-container,
+		.form-container {
+			background: #fff;
+			border-radius: 15px;
+			box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+			padding: 25px;
+		}
+
+		.table th,
+		.table td {
+			vertical-align: middle;
+			font-size: 1rem;
+		}
+
+		.hidden-section {
+			display: none;
+		}
+
+		.btn-primary {
+			background: linear-gradient(135deg, #6a11cb, #2575fc);
+			border: none;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		}
+
+		.btn-primary:hover {
+			background: linear-gradient(135deg, #2575fc, #6a11cb);
+		}
+
+		.btn-secondary {
+			background: #6c757d;
+			border: none;
+		}
+
+		.btn-secondary:hover {
+			background: #5a6268;
+		}
+
+		.container-fluid {
+			display: flex;
+			flex-wrap: nowrap;
+		}
+
+		.sidebar {
+			height: 100vh;
+			/* Ensure the sidebar spans the full height */
+		}
+
+		.main-content {
+			flex-grow: 1;
+			/* Ensure the main content fills the remaining space */
+			margin-left: 0;
+			/* Remove any unintended margin */
+		}

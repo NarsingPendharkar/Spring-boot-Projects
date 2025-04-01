@@ -1,63 +1,33 @@
 package org.school.entity;
 
-import jakarta.persistence.*;
-import java.time.LocalDate;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Table(name = "students")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Student {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId; // Stores User ID instead of direct reference
+    @Column(nullable = false)
+    private Long userId; // Foreign key reference to User
 
-    private String admissionNumber;
-    private LocalDate admissionDate;
-    private Long classId; // Stores Class ID instead of direct reference
-    
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public Long getUserId() {
-		return userId;
-	}
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
-	public String getAdmissionNumber() {
-		return admissionNumber;
-	}
-	public void setAdmissionNumber(String admissionNumber) {
-		this.admissionNumber = admissionNumber;
-	}
-	public LocalDate getAdmissionDate() {
-		return admissionDate;
-	}
-	public void setAdmissionDate(LocalDate admissionDate) {
-		this.admissionDate = admissionDate;
-	}
-	public Long getClassId() {
-		return classId;
-	}
-	public void setClassId(Long classId) {
-		this.classId = classId;
-	}
-	public Student() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	public Student(Long id, Long userId, String admissionNumber, LocalDate admissionDate, Long classId) {
-		super();
-		this.id = id;
-		this.userId = userId;
-		this.admissionNumber = admissionNumber;
-		this.admissionDate = admissionDate;
-		this.classId = classId;
-	}
+    @Column(nullable = false)
+    private String gradeLevel;
 
-    // Getters and Setters
-    
+    private Long parentId; // Foreign key reference to User (Parent)
 }

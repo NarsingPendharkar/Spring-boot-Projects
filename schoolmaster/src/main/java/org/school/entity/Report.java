@@ -16,27 +16,23 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "fees")
+@Table(name = "reports")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Fee {
+public class Report {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private Long studentId; // Foreign key reference to Student
+    private String reportType;
 
     @Column(nullable = false)
-    private Double amount;
+    private Long generatedByUserId; // Foreign key reference to User (Admin)
 
-    @Temporal(TemporalType.DATE)
-    private Date dueDate;
-
-    
-    @Column(nullable = false)
-    private String status;  // PAID, PENDING, OVERDUE
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date generatedAt;
 }

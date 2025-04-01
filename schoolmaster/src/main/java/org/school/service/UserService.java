@@ -3,7 +3,6 @@ package org.school.service;
 import java.util.Collections;
 import java.util.List;
 
-import org.school.DTO.UserDTO;
 import org.school.entity.User;
 import org.school.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +50,12 @@ public class UserService implements UserDetailsService {
 	public void deleteUserbyId(long id) {
 		userRepositor.deleteById(id).orElseThrow(()-> new RuntimeException("User not found"));
 	}
+	
+// find all users
+	public List<User> findAllUsers() {
+        List<User> users = userRepositor.findAll();
+        return users;
+    }
 	
 	
 
