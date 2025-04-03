@@ -3,13 +3,20 @@ package org.school.service;
 import java.util.Collections;
 import java.util.List;
 
+import org.school.entity.ParentDetails;
+import org.school.entity.Student;
+import org.school.entity.Teacher;
 import org.school.entity.User;
+import org.school.repository.ParentRepository;
+import org.school.repository.StudentRepository;
+import org.school.repository.TeacherRepository;
 import org.school.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
@@ -21,6 +28,15 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private  UserRepository userRepositor;
 	
+	
+	
+	  @Autowired private StudentRepository studentRepository;
+	  
+	  @Autowired private TeacherRepository teacherRepository;
+	  
+	  @Autowired private ParentRepository parentRepository;
+	 
+	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User foundUser=userRepositor.findByUsername(username).orElseThrow(()->new UsernameNotFoundException("User not found"));
@@ -30,8 +46,9 @@ public class UserService implements UserDetailsService {
 				);
 	}
 	
-	public void save(User newUser) {
+	public User save(User newUser) {
 		userRepositor.save(newUser);
+		return newUser;
 	}
 	
 	public User saveAndGet(User newUser) {
@@ -57,6 +74,9 @@ public class UserService implements UserDetailsService {
         return users;
     }
 	
+	public User findByUsername(String username) {
+		return userRepositor.findByUsername(username).orElseThrow(()-> new RuntimeException("User not found"));
+	}
 	
 
 	

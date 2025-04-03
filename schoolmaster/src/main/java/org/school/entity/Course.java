@@ -5,18 +5,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "courses")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class Course {
 
     @Id
@@ -29,13 +23,9 @@ public class Course {
     @Column(length = 500)
     private String description;
 
-    @Column(nullable = false)
-    private Long teacherId; // Foreign key reference to User (Teacher)
-
-	@Override
-	public String toString() {
-		return String.format("Course [id=%s, name=%s, description=%s, teacherId=%s]", id, courseName, description, teacherId);
-	}
+    @ManyToOne
+    @JoinColumn(name = "teacher_id", nullable = false)
+    private User teacher; // References a Teacher (User)
 
 	public Long getId() {
 		return id;
@@ -61,12 +51,12 @@ public class Course {
 		this.description = description;
 	}
 
-	public Long getTeacherId() {
-		return teacherId;
+	public User getTeacher() {
+		return teacher;
 	}
 
-	public void setTeacherId(Long teacherId) {
-		this.teacherId = teacherId;
+	public void setTeacher(User teacher) {
+		this.teacher = teacher;
 	}
 
 	public Course() {
@@ -74,15 +64,19 @@ public class Course {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Course(Long id, String courseName, String description, Long teacherId) {
+	public Course(Long id, String courseName, String description, User teacher) {
 		super();
 		this.id = id;
 		this.courseName = courseName;
 		this.description = description;
-		this.teacherId = teacherId;
+		this.teacher = teacher;
 	}
-	
-	
-    
-    
+
+	@Override
+	public String toString() {
+		return String.format("Course [id=%s, courseName=%s, description=%s, teacher=%s]", id, courseName, description,
+				teacher);
+	}
+
+    // Constructors, Getters & Setters
 }

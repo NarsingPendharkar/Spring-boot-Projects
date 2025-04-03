@@ -9,15 +9,15 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "students")
-public class Student {
+@Table(name = "teachers")
+public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String firstName;
     private String lastName;
-    private String gradeLevel;
+    private String subject;
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false, unique = true)
@@ -47,12 +47,12 @@ public class Student {
 		this.lastName = lastName;
 	}
 
-	public String getGradeLevel() {
-		return gradeLevel;
+	public String getSubject() {
+		return subject;
 	}
 
-	public void setGradeLevel(String gradeLevel) {
-		this.gradeLevel = gradeLevel;
+	public void setSubject(String subject) {
+		this.subject = subject;
 	}
 
 	public User getUser() {
@@ -63,26 +63,26 @@ public class Student {
 		this.user = user;
 	}
 
-	public Student() {
-		super();
-		// TODO Auto-generated constructor stub
+	@Override
+	public String toString() {
+		return String.format("Teacher [id=%s, firstName=%s, lastName=%s, subject=%s, user=%s]", id, firstName, lastName,
+				subject, user);
 	}
 
-	public Student(Long id, String firstName, String lastName, String gradeLevel, User user) {
+	public Teacher(Long id, String firstName, String lastName, String subject, User user) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.gradeLevel = gradeLevel;
+		this.subject = subject;
 		this.user = user;
 	}
 
-	@Override
-	public String toString() {
-		return String.format("Student [id=%s, firstName=%s, lastName=%s, gradeLevel=%s, user=%s]", id, firstName,
-				lastName, gradeLevel, user);
+	public Teacher() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
     
     
+    
 }
-

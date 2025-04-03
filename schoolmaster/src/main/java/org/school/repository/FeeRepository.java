@@ -13,6 +13,6 @@ public interface FeeRepository extends JpaRepository<Fee, Long> {
 
 	public Optional<Fee> findByStudentId(Long studentId);
 
-	public Optional<Fee> findByStudentIdAndStatus(Long studentId, String status);
+	//public Optional<Fee> findByStudentIdAndStatus(Long studentId, String status);
 
 }

@@ -37,9 +37,10 @@ public class FeeService {
      public void updateFee(Fee fee) {
         feeRepository.save(fee);
     }
-    // get fee by student id and status
-    public Fee getFeeByStudentIdAndStatus(Long studentId, String status) {
-    	return feeRepository.findByStudentIdAndStatus(studentId, status).orElse(null);
-    }
+	/*
+	 * // get fee by student id and status public Fee
+	 * getFeeByStudentIdAndStatus(Long studentId, String status) { return
+	 * feeRepository.findByStudentIdAndStatus(studentId, status).orElse(null); }
+	 */
 
 }

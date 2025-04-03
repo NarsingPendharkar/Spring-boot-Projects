@@ -1,8 +1,5 @@
 package org.school.entity;
 
-import java.time.LocalDate;
-
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,12 +7,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 
 @Entity
-@Table(name = "grades")
-public class Grade {
+@Table(name = "enrollments")
+public class Enrollment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,13 +23,6 @@ public class Grade {
     @ManyToOne
     @JoinColumn(name = "course_id", nullable = false)
     private Course course; // References Course entity
-
-    @Column(nullable = false)
-    private String grade; // A, B, C, D, F
-
-    @Column(nullable = false)
-    @Temporal(TemporalType.DATE)
-    private LocalDate dateAwarded; // Date grade was given
 
 	public Long getId() {
 		return id;
@@ -60,42 +48,22 @@ public class Grade {
 		this.course = course;
 	}
 
-	public String getGrade() {
-		return grade;
-	}
-
-	public void setGrade(String grade) {
-		this.grade = grade;
-	}
-
-	public LocalDate getDateAwarded() {
-		return dateAwarded;
-	}
-
-	public void setDateAwarded(LocalDate dateAwarded) {
-		this.dateAwarded = dateAwarded;
-	}
-
-	public Grade(Long id, Student student, Course course, String grade, LocalDate dateAwarded) {
+	public Enrollment(Long id, Student student, Course course) {
 		super();
 		this.id = id;
 		this.student = student;
 		this.course = course;
-		this.grade = grade;
-		this.dateAwarded = dateAwarded;
 	}
 
-	public Grade() {
+	public Enrollment() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public String toString() {
-		return String.format("Grade [id=%s, student=%s, course=%s, grade=%s, dateAwarded=%s]", id, student, course,
-				grade, dateAwarded);
+		return String.format("Enrollment [id=%s, student=%s, course=%s]", id, student, course);
 	}
 
     // Constructors, Getters & Setters
-	
 }

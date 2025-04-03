@@ -29,5 +29,9 @@ public class GradeService {
 	public Grade getGradeById(Long id) {
         return gradeRepository.findById(id).orElse(null);
     }
+	// get grade by student id
+	public List<Grade> getStudentsGrades(Long StudentId){
+		return gradeRepository.findByStudentId(StudentId);
+	}
 
 }
