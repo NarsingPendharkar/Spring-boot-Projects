@@ -1,5 +1,6 @@
 package org.school.entity;
-import org.hibernate.annotations.GenericGenerator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -7,9 +8,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
 
 @Entity
+@JsonIgnoreProperties({"password", "username"})
 public class User {
     @Id
    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "userseq")
@@ -20,6 +21,7 @@ public class User {
     private String username;
 
     @Column(nullable = false)
+    @JsonIgnore
     private String password;
 
     
