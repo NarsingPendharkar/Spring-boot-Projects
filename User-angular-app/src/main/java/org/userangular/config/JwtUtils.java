@@ -4,7 +4,6 @@ import java.util.Date;
 
 import javax.crypto.SecretKey;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
@@ -36,15 +36,33 @@ public class JwtUtils {
     	    	return token;
     }
 
+	/*
+	 * public String extractUsername(String token) { Claims claims =
+	 * Jwts.parserBuilder() .setSigningKey(generateKey()) .build()
+	 * .parseClaimsJws(token) .getBody(); return claims.getSubject(); }
+	 * 
+	 */
     public String extractUsername(String token) {
-         Claims claims = Jwts.parserBuilder()
-                .setSigningKey(generateKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-        return claims.getSubject();	
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(generateKey()) // Make sure the key is correct
+                    .build()
+                    .parseClaimsJws(token) // Parse the JWT token
+                    .getBody();
+            
+            return claims.getSubject();  // Get the subject (username) from the token
+        } catch (ExpiredJwtException e) {
+            logger.error("JWT token expired");
+            throw new IllegalArgumentException("Token is expired", e);
+        } catch (JwtException e) {
+            logger.error("Invalid JWT token");
+            throw new IllegalArgumentException("Invalid JWT token", e);
+        } catch (Exception e) {
+            logger.error("Error parsing JWT token", e);
+            throw new RuntimeException("Error parsing JWT token", e);
+        }
     }
-    
+
 
 	/*
 	 * public boolean validateToken(String token, UserDetails userDetails) { return
