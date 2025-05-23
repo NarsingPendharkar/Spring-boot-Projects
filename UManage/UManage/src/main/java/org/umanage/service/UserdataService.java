@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.umanage.dto.AppUserRequest;
 import org.umanage.entity.AppUser;
 
 import jakarta.validation.Valid;

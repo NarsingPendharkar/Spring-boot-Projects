@@ -12,6 +12,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,21 +28,15 @@ import lombok.NoArgsConstructor;
 public class UserProfile extends Auditable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-
     @Column(length = 150)
     private String address;
-
-    private String city;
-    private String state;
-    private String country;
+    @Pattern(regexp = "[\\d]+",message = "Only digits are allowed ")
+    @Size(min = 10 , max = 10,message = "Please enter valid phone number !")
     private String phone;
-
+    @Temporal(TemporalType.DATE)
     private LocalDate dateOfBirth;
-
-    @Lob
-    private byte[] profilePhoto;
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")

@@ -2,9 +2,11 @@ package org.umanage.dto;
 
 import java.time.LocalDateTime;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
+@Schema
 public class AppUserResponse {
 	private Long id;
 	private String name;
