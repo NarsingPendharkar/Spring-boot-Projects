@@ -1,0 +1,2 @@
+2025-05-27 21:33:21 INFO  o.a.c.c.C.[.[.[/]:log - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-05-27 21:33:22 INFO  o.u.c.AdminController:getAllUsers - get list of users called !

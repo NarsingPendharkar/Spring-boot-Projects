@@ -6,12 +6,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.umanage.dto.AppUserResponse;
 import org.umanage.entity.AppUser;
 import org.umanage.exception.UserAlreadyExistsException;
@@ -27,15 +37,17 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
+import lombok.extern.flogger.Flogger;
 
 @RestController
 @RequestMapping("/api/admin")
 @CrossOrigin("*")
 @Tag(name = "User Management by ADMIN", description = "APIs for managing users by ADMIN")
 public class AdminController {
+	
+	private static final Logger Flogger=LogManager.getLogger(AdminController.class);
 
     @Autowired
     private UserdataService userService;
@@ -87,6 +99,7 @@ public class AdminController {
     @Operation(summary = "List all users", description = "Returns a list of all registered users")
     @GetMapping("/list")
     public List<AppUserResponse> getAllUsers() {
+    	 Flogger.info("get list of users called !");
         return userService.getAllUsers()
                 .stream()
                 .map(user -> modelMapper.map(user, AppUserResponse.class))
