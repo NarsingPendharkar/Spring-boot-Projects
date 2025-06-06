@@ -1,61 +1,59 @@
 package org.umanage.exception;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.annotation.*;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-	
-	@ExceptionHandler(Exception.class)
-	public ResponseEntity<Map<String,Object>> handleAllExceptions(Exception ex){
-		Map<String, Object>response=new HashMap<>();
-		response.put("Error", ex.getMessage());
-		response.put("TimeStamp", LocalDateTime.now());
-		response.put("Errorcode", HttpStatus.INTERNAL_SERVER_ERROR.value());
-		response.put("trackId", UUID.randomUUID().toString());
-		return new ResponseEntity<>(response,HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-	
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Map<String, Object>> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
-	    Map<String, Object> response = new HashMap<>();
-	    ex.getBindingResult().getFieldErrors().forEach((error) -> {
-	        response.put(error.getField(), error.getDefaultMessage());
-	    });
-	    response.put("timestamp", LocalDateTime.now());
-	    response.put("status", HttpStatus.BAD_REQUEST.value());
-	    response.put("trackId", UUID.randomUUID().toString());
-	    return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-	}
-	
-	@ExceptionHandler(UserNotFoundException.class)
-	public ResponseEntity<Map<String,Object>>handleUsernotfound(UserNotFoundException ex){
-		Map<String, Object> response=new HashMap<>();
-		response.put("Error", ex.getMessage());
-		response.put("TimeStamp", LocalDateTime.now());
-		response.put("Errorcode", HttpStatus.NOT_FOUND.value());
-		response.put("trackId", UUID.randomUUID().toString());
-		return new ResponseEntity<>(response,HttpStatus.NOT_FOUND);
-	}
-	
-	@ExceptionHandler(UserAlreadyExistsException.class)
-	public ResponseEntity<Map<String, Object>> handleUserAlreadyExists(UserAlreadyExistsException ex) {
-	    Map<String, Object> error = new HashMap<>();
-	    error.put("timestamp", LocalDateTime.now());
-	    error.put("status", HttpStatus.CONFLICT.value()); 
-	    error.put("error", "User Already Exists");
-	    error.put("message", ex.getMessage());
-	    error.put("trackId", UUID.randomUUID().toString());
-	    return new ResponseEntity<>(error, HttpStatus.CONFLICT);
-	}
 
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, Object>> handleValidation(MethodArgumentNotValidException ex) {
+        Map<String, Object> body = new HashMap<>();
+        ex.getBindingResult().getFieldErrors().forEach(error ->
+            body.put(error.getField(), error.getDefaultMessage())
+        );
+        body.put("timestamp", LocalDateTime.now());
+        body.put("status", HttpStatus.BAD_REQUEST.value());
+        body.put("trackId", UUID.randomUUID().toString());
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+    }
 
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<Object> handleUserAlreadyExists(UserAlreadyExistsException ex,HttpServletRequest request) {
+        return buildResponse(HttpStatus.NOT_ACCEPTABLE, ex.getMessage(), request);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<Object> handleAccessDenied(AccessDeniedException ex, HttpServletRequest request) {
+        return buildResponse(HttpStatus.FORBIDDEN, "Access denied", request);
+    }
+    
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handleAllExceptions1( Exception ex, HttpServletRequest request) {
+    	return buildResponse(HttpStatus.FORBIDDEN, "Internal server error !", request);
+    }
+    
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<Object>userNotFoundException(UserNotFoundException ex,HttpServletRequest request){
+    	return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage(), request);
+    }
+
+    private ResponseEntity<Object> buildResponse(HttpStatus status, String message, HttpServletRequest request) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("status", status.value());
+        body.put("error", status.getReasonPhrase());
+        body.put("message", message);
+        body.put("path", request.getRequestURI());
+        body.put("trackId", UUID.randomUUID().toString());
+        return new ResponseEntity<>(body, status);
+    }
 }

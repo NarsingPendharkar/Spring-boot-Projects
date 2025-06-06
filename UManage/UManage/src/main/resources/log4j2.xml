@@ -1,53 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="all" monitorInterval="60">
-  
-  <Appenders>
-    <!-- Rolling file appender: rolls over daily or when file size exceeds 10MB -->
-    <RollingFile name="RollingFileLogger"
-                 fileName="logs/app.log"
-                 filePattern="logs/app-%d{yyyy-MM-dd}-%i.log.gz">
-<!--      <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %c{1.}:%M - %msg%n" />
+<Configuration status="WARN" monitorInterval="60">
 
--->      
-<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5level %c{1.}:%M - %msg%n" />
-<Policies>
-        <!-- Roll over at midnight -->
-        <TimeBasedTriggeringPolicy />
-        <!-- Roll over when file size exceeds 10 MB -->
-        <SizeBasedTriggeringPolicy size="10MB" />
-      </Policies>
-      <!-- Keep 30 days of logs -->
-      <DefaultRolloverStrategy max="30" />
-    </RollingFile>
+    <Appenders>
+        <!-- Rolling File Appender with your pattern and paths -->
+        <RollingRandomAccessFile name="RollingFileLogger"
+                                 fileName="logs/app.log"
+                                 immediateFlush="true"
+                                 append="true"
+                                filePattern="logs/app-%d{yyyy-MM-dd}-%i.log.gz">
 
-    <!-- Console appender to log to console (stdout) -->
-    <Console name="Console" target="SYSTEM_OUT">
-      <PatternLayout pattern="%d{HH:mm:ss} [%t] %-5level %c{1.}:%M - %msg%n" />
-    </Console>
-  </Appenders>
+            <PatternLayout>
+                <Pattern>%d{dd/MMM/yyyy HH:mm:ss} %-5p %c{1}.%M(%L) - %msg%n</Pattern>
+            </PatternLayout>
 
-  <Loggers>
-    <!-- Enable debug logging for properties loading -->
-    <Logger name="java.util.Properties" level="debug" additivity="false">
-      <AppenderRef ref="RollingFileLogger" />
-    </Logger>
+            <Policies>
+                <!-- Size-based rollover at 50MB -->
+                <SizeBasedTriggeringPolicy size="50 MB" />
+            </Policies>
+        </RollingRandomAccessFile>
 
-    <!-- Enable debug logging for class loading -->
-    <Logger name="java.lang.ClassLoader" level="debug" additivity="false">
-      <AppenderRef ref="RollingFileLogger" />
-    </Logger>
+        <!-- Console Appender -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout>
+                <Pattern>%d{HH:mm:ss.SSS} [%t] %-5level %c{1}.%M(%L) - %msg%n</Pattern>
+            </PatternLayout>
+        </Console>
+    </Appenders>
 
-    <!-- Application specific logger -->
-    <Logger name="org.umanage.controller" level="debug" additivity="false">
-      <AppenderRef ref="RollingFileLogger" />
-      <AppenderRef ref="Console" />
-    </Logger>
+    <Loggers>
+        <!-- AsyncLogger for -->
+        <AsyncLogger name="org.umanage" level="all" additivity="false" includeLocation="false">
+            <AppenderRef ref="RollingFileLogger"/>
+            <AppenderRef ref="Console"/>
+        </AsyncLogger>
 
-    <!-- Root logger: logs INFO and above to both rolling file and console -->
-    <Root level="info">
-      <AppenderRef ref="RollingFileLogger" />
-      <AppenderRef ref="Console" />
-    </Root>
-  </Loggers>
+        <!-- Root logger as Async -->
+        <AsyncRoot level="info" includeLocation="false">
+            <AppenderRef ref="RollingFileLogger"/>
+            <AppenderRef ref="Console"/>
+        </AsyncRoot>
+    </Loggers>
 
 </Configuration>
