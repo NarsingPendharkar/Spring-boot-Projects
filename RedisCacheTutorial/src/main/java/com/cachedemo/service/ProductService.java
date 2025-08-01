@@ -6,6 +6,9 @@ import java.util.Optional;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.cachedemo.dao.ProductRepository;
@@ -41,6 +44,12 @@ public class ProductService {
 	@CacheEvict(value = "product", key="#id")
 	public void deleteById(long id) {
 		repository.deleteById(id);
+	}
+	
+	public Page<Product> getProductsbyPage(int pageNumber,int pageSize){
+		Pageable pageable=PageRequest.of(pageNumber, pageSize);
+		Page<Product>pageList=repository.findAll(pageable);
+		return pageList;
 	}
 
     
