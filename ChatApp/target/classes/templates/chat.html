@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Chat with AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5fafc 0%, #dbeafe 100%);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+        }
+        .chat-container { max-width: 700px; margin: 60px auto; }
+        .premium-glass {
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(60,111,202,0.07);
+            backdrop-filter: blur(6px);
+            border: 1.5px solid rgba(30,58,138,0.07);
+            padding: 2.25rem 2rem;
+        }
+        .ai-header { display: flex; align-items: center; margin-bottom: 1.6rem; }
+        .ai-icon {
+            font-size: 2.1rem; color: #4f8cff;
+            background: linear-gradient(135deg, #bae6fd 0%, #4f8cff 100%);
+            border-radius: 50%; padding: .6rem;
+            box-shadow: 0 4px 16px #0ea5e980; margin-right: 1.2rem;
+        }
+        textarea.form-control { border-radius: 12px; }
+        .btn-premium {
+            background: linear-gradient(90deg, #4f8cff 0%, #38bdf8 100%);
+            color: #fff; border-radius: 10px; padding: .600rem 2rem;
+            font-weight: 600; font-size: 1.10rem; border: none;
+        }
+        .btn-premium:hover { background: linear-gradient(90deg, #2563eb 0%, #0ea5e9 100%); }
+        .answer-box {
+            background: rgba(236, 253, 245, 0.68);
+            border-radius: 15px; padding: 2rem 1.2rem; margin-top: 30px;
+            border: 1.25px solid #99f6e4;
+        }
+        .loader { display: none; margin: 25px auto 0; text-align: center; }
+    </style>
+</head>
+<body>
+<div class="container chat-container">
+    <div class="premium-glass shadow-lg">
+        <div class="ai-header">
+            <i class="bi bi-robot ai-icon"></i>
+            <h3 class="mb-0 fw-bold" style="color:#0ea5e9">Ask AI <span style="color:#4f8cff;">(Groq)</span></h3>
+        </div>
+
+        <!-- Error Alert -->
+        <div th:if="${error}" class="alert alert-danger d-flex align-items-center" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            <span th:text="${error}"></span>
+        </div>
+
+        <!-- Form -->
+        <form id="askForm" action="/api/chat/ask-ui" method="post" autocomplete="off" onsubmit="return validateForm()">
+            <div class="mb-4">
+                <label class="form-label">Enter your question</label>
+                <textarea class="form-control shadow-sm" id="question" name="question" rows="3"
+                          placeholder="Type your question here..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-premium">
+                <i class="bi bi-send"></i> Submit
+            </button>
+        </form>
+
+        <!-- Loader -->
+        <div id="loader" class="loader">
+            <div class="spinner-border text-primary" role="status" style="width:2.5rem;height:2.5rem;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-3 text-muted">AI is thinking...</p>
+        </div>
+
+        <!-- Answer Section -->
+        <div class="answer-box" th:if="${answer}">
+            <h5><i class="bi bi-question-circle"></i> Question:</h5>
+            <p class="fw-semibold text-dark" th:text="${question}"></p>
+
+            <h5 class="mt-3"><i class="bi bi-chat-dots"></i> Answer:</h5>
+            <pre class="answer-txt bg-white p-3 rounded" th:text="${answer}"></pre>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Validation & Loader -->
+<script>
+    const form = document.getElementById("askForm");
+    const loader = document.getElementById("loader");
+    const question = document.getElementById("question");
+
+    function validateForm() {
+        if (!question.value.trim()) {
+            alert("Please enter a question before submitting.");
+            return false;
+        }
+        loader.style.display = "block"; // show loader
+        return true;
+    }
+</script>
+</body>
+</html>
