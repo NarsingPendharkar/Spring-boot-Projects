@@ -35,7 +35,7 @@ public TokenFilter getTokenFilter() {
 	 @Bean
 	    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 	        http.authorizeHttpRequests(authorizeRequests ->
-	                authorizeRequests.requestMatchers("/","/login").permitAll()
+	                authorizeRequests.requestMatchers("/register","/login","/").permitAll()
 	                        .requestMatchers("/authuser").permitAll()
 	                        .requestMatchers("/admin").hasRole("ADMIN")
 	                        .anyRequest().authenticated());

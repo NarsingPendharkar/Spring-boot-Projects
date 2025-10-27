@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 public class AuthController {
@@ -44,6 +46,11 @@ public class AuthController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		return "Hello, " + authentication.getName().toUpperCase() +": "+authentication.getAuthorities()+ "! Welcome to the admin section.";
     }
+	
+	@GetMapping("/home")
+	public String getMethodName(@RequestParam String param) {
+		return "User is valid !";
+	}
 	
 	
 
