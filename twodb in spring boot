@@ -114,3 +114,28 @@ public class AddressDbConfig {
     }
 }
 
+
+---------------------------------------------------------------------------------
+@configuration - mark class as source of beans
+@enabletransactionmanagement : enables annotation driven transaction mangement which allow us to use transactional annotation
+@enableJparepository : bind repo to specific database  
+basepackage : where repo are located
+entitymanagerFactory = which entity to use
+trasctionmanagerRef = which trasaction manager to use
+(this will tell that repo in this package use this database config)
+
+
+4. datasource bean
+create db connection use primary to use by default
+@configurationproperites used to bind properties with prefix in application properties file
+
+
+5. entitymanagerfactory 
+creates entitymanager manages persistence context
+datasource which db to use
+packages where the entities are
+persistanceUnit logiacal db identifier
+
+6. TransactionManager bean
+it ensures trasactions are applied only to the primary database
+
