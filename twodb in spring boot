@@ -1,1 +1,116 @@
-two db config
+application properties 
+
+spring.application.name=twodb
+server.port=8181
+
+datasource.primary.jdbc-url=jdbc:h2:mem:dbone
+datasource.primary.username=one
+datasource.primary.password=one
+datasource.primary.driverClassName=org.h2.Driver
+
+datasource.secondary.jdbc-url=jdbc:h2:mem:dbtwo
+datasource.secondary.username=two
+datasource.secondary.password=two
+datasource.secondary.driverClassName=org.h2.Driver
+
+
+spring.h2.console.path=/h2-console
+spring.h2.console.enabled=true
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+
+one DB config
+
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.boot.jpa.EntityManagerFactoryBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import jakarta.persistence.EntityManagerFactory;
+
+@Configuration
+@EnableTransactionManagement
+@EnableJpaRepositories(
+        basePackages = "com.example.twodb.primary.repo",
+        entityManagerFactoryRef = "primaryEntityManagerFactory",
+        transactionManagerRef = "primaryTransactionManager"
+)
+public class UserDbConfig {
+
+    @Primary
+    @Bean
+    @ConfigurationProperties(prefix = "datasource.primary")
+    public DataSource primaryDataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+    @Primary
+    @Bean
+    public LocalContainerEntityManagerFactoryBean primaryEntityManagerFactory(
+            EntityManagerFactoryBuilder builder) {
+
+        return builder
+                .dataSource(primaryDataSource())
+                .packages("com.example.twodb.primary.entity")
+                .persistenceUnit("primaryPU")
+                .build();
+    }
+
+    @Primary
+    @Bean
+    public PlatformTransactionManager primaryTransactionManager(
+            @Qualifier("primaryEntityManagerFactory") EntityManagerFactory emf) {
+
+        return new JpaTransactionManager(emf);
+    }
+}
+
+
+second db config
+
+@Configuration
+@EnableTransactionManagement
+@EnableJpaRepositories(
+        basePackages = "com.example.twodb.secondary.repo",
+        entityManagerFactoryRef = "secondaryEntityManagerFactory",
+        transactionManagerRef = "secondaryTrasactionManager"
+        )
+
+public class AddressDbConfig {
+
+    
+    @Bean
+    @ConfigurationProperties(prefix = "datasource.secondary")
+    public DataSource secondaryDataSource() {
+        return DataSourceBuilder.create().build();
+    }
+    
+    @Bean
+    public LocalContainerEntityManagerFactoryBean secondaryEntityManagerFactory(EntityManagerFactoryBuilder builder) {
+        return builder
+                .dataSource(secondaryDataSource())
+                .packages("com.example.twodb.secondary.entity")
+                .persistenceUnit("secondarydb")
+                .build();
+        
+    }
+    
+    @Bean
+    public PlatformTransactionManager secondaryTrasactionManager(
+            @Qualifier("secondaryEntityManagerFactory") EntityManagerFactory fac) {
+        return new JpaTransactionManager(fac);
+        
+    }
+}
+
