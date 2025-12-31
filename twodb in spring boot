@@ -393,3 +393,88 @@ Create a diagram explanation for better memory
 Just tell me 👍
 
 
+@Configuration
+public class SimpleBatchConfig {
+ 
+    @Bean
+    public Job job(JobRepository jobRepository, Step step) {
+        return new JobBuilder("job", jobRepository)
+         .listener("started")
+                .start(step)
+                .build();
+    }
+ 
+    @Bean
+    public Step step(JobRepository jobRepository,
+                     PlatformTransactionManager transactionManager) {
+        return new StepBuilder("step", jobRepository)
+                .<Employee, Employee>chunk(1, transactionManager)
+                .reader(reader())
+                .processor(processor())
+                .writer(writer())
+                .build();
+    }
+ 
+    
+    @Bean
+    @StepScope
+    public ItemReader<Employee> reader() {
+        return new SimpleItemReader();
+    }
+ 
+    @Bean
+    public ItemProcessor<Employee, Employee> processor() {
+        return new SimpleItemProcessor();
+    }
+ 
+    @Bean
+    public ItemWriter<Employee> writer() {
+        return new SimpleItemWriter();
+    }
+}
+@Component
+public class SimpleItemWriter implements ItemWriter<Employee> {
+
+	@Override
+	public void write(Chunk<? extends Employee> chunk) throws Exception {
+		chunk.forEach(e->System.out.println(e.toString()));
+		System.out.println("Job executed--------------");
+	}
+}
+@Component
+public class SimpleItemProcessor implements ItemProcessor<Employee  , Employee> {
+ 
+    @Override
+    public Employee process(Employee item) {
+        Employee employee=new Employee();
+        employee.setName(item.getName().toUpperCase());
+        employee.setAddress("Address :"+item.getAddress());
+        return employee;
+        
+    }
+	
+	
+
+
+@Component
+public class SimpleItemReader implements ItemReader<Employee> {
+
+	private String[] data = {"Alice", "Bob", "Charlie", "Diana"};
+    private int index = 1;
+
+    List<Employee>allEmployees=new ArrayList<>();
+    
+    @Override
+    public Employee read() {
+        Employee employee = null;
+        List<Employee>allEmployees=List.of(new Employee("narsing", 28, "pune"),new Employee("yash", 24, "pune"),new Employee("sarthak", 28, "mumbai"));
+        for(int i=0;i<allEmployees.size();i++) {
+            employee= allEmployees.get(i);
+        }
+        return employee;
+    }
+}
+ 
+  
+
+
